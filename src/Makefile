@@ -230,6 +230,7 @@ FIRM_OBJ += $(addprefix $(BUILD)/$(MICROPY_DIR)/,\
 	systick.o               \
 	i2c.o                   \
 	spi.o                   \
+	can.o                   \
 	pin.o                   \
 	pin_defs_stmhal.o       \
 	pin_named_pins.o        \
@@ -307,6 +308,12 @@ FIRM_OBJ += $(addprefix $(BUILD)/$(MICROPY_DIR)/usbdev/, \
 	)
 
 FIRM_OBJ += $(addprefix $(BUILD)/$(MICROPY_DIR)/extmod/,\
+	modujson.o          \
+	modure.o            \
+	moduzlib.o          \
+	moduhashlib.o       \
+	modubinascii.o      \
+	modurandom.o        \
 	fsusermount.o       \
 	vfs_fat.o           \
 	vfs_fat_ffconf.o    \

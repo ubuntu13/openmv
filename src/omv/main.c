@@ -46,6 +46,7 @@
 #include "i2c.h"
 #include "uart.h"
 #include "dac.h"
+#include "can.h"
 #include "extint.h"
 #include "servo.h"
 
@@ -346,6 +347,7 @@ soft_reset:
     pin_init0();
     extint_init0();
     timer_init0();
+    can_init0();
     rng_init0();
     i2c_init0();
     spi_init0();
@@ -502,7 +504,15 @@ soft_reset:
             usbdbg_set_irq_enabled(true);
 
             // run REPL
-            pyexec_friendly_repl();
+            if (pyexec_mode_kind == PYEXEC_MODE_RAW_REPL) {
+                if (pyexec_raw_repl() != 0) {
+                    break;
+                }
+            } else {
+                if (pyexec_friendly_repl() != 0) {
+                    break;
+                }
+            }
 
             nlr_pop();
         }
@@ -531,6 +541,7 @@ soft_reset:
     storage_flush();
     timer_deinit();
     uart_deinit();
+    can_deinit();
 
     first_soft_reset = false;
     goto soft_reset;
